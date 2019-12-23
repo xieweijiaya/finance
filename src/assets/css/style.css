@@ -29,6 +29,7 @@ a {
   margin: 0;
   padding: 0;
   outline: 0;
+	cursor:pointer;
 }
 fieldset,
 img {
@@ -1551,7 +1552,7 @@ body {
 }
 .reg_con_wper {
   height: 910px;
-  /* background: url(../images/reg_bg01.png) no-repeat scroll center center; */
+  background: url(../img/login/login04.png) no-repeat scroll center center;
 }
 .reg_con {
   padding-top: 50px;

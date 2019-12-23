@@ -4,61 +4,53 @@
 		<div class="zxcf_top_wper">
 			<div class="zxcf_top px1000 clearfix">
 				<div class="zxcf_top_l fl">
-					<img src="../../assets/img/login/zxcf_phone.png" alt="">
+					<img src="images/zxcf_phone.png" alt="">
 					400-027-0101(工作时间9:00-17:30)
 					<a href="#"><img src="../../assets/img/login/zxcf_weixin.png" alt=""></a>
 					<a href="#"><img src="../../assets/img/login/zxcf_sina.png" alt=""></a>
 					<a href="#"><img src="../../assets/img/login/zxcf_qq.png" alt=""></a>
 				</div>
 				<div class="zxcf_top_r fr">
-					<a @click="register">免费注册</a>
+					<a @click="login" class="curspan">立即登录</a>
 					<span>|</span>
 					<a href="problem.html">常见问题</a>
 				</div>
 			</div>
 		</div>
-		<!-- end top -->
-		<div class="zxcf_nav_wper">
-			<div class="zxcf_nav clearfix px1000">
-				<div class="zxcf_nav_l fl"><img src="../../assets/img/login/login03.png" alt=""></div>
-				<div class="zxcf_nav_r fr">
-					<!-- <img src="../../assets/img/login/lg_pic01.png" alt="">
-					<span>
-						<a href="#">返回首页</a></span> -->
-
-				</div>
-			</div>
-		</div>
 		<!-- end  -->
-		<div class="login_con_wper">
-			<div class="login_con px1000 ">
-				<div class="lg_section clearfix">
-					<div class="lg_section_l fl">
-						<img src="../../assets/img/login/login01.png">
+		<div class="reg_con_wper">
+			<div class="reg_con px1000">
+				<div class="reg_box clearfix">
+					<div class="reg_box_l fl">
+						<img src="../../assets/img/loan/reg_pic01.png" alt="">
 					</div>
-					<!-- end l -->
-					<div class="lg_section_r fl">
+					<div class="reg_box_r fl">
 						<h2 class="lg_sec_tit clearfix">
-							<span class="fl">登录</span>
-							<em class="fr">没有帐号，<a href="#">立即注册</a></em>
+							<span class="fl">注册</span>
+							<em class="fr">没有帐号，<a href="#">立即登录</a></em>
 						</h2>
-						<!-- :rules="rules" -->
+						<!-- <form> -->
 						<el-form :model="loginForm" ref="ruleForm">
 							<fieldset>
 								<el-form-item class="mt20">
-									<el-input type="text" v-model="loginForm.uname" placeholder="请输入用户账号" autocomplete="off"></el-input>
+									<el-input type="text" placeholder="用户名/手机"></el-input>
 								</el-form-item>
 								<el-form-item class="mt20">
-									<el-input type="password" v-model="loginForm.upwd" placeholder="请输入用户密码" autocomplete="off"></el-input>
+									<el-input type="password" placeholder="密码"></el-input>
 								</el-form-item>
-								<el-form-item class="clearfix lg_check">
-									<span class="fl">
-										<input type="checkbox">记住用户名
-									</span>
-									<a href="#" class="fr">忘记密码？找回</a>
+								<el-form-item class="mt20">
+									<el-input type="password" placeholder="确认密码"></el-input>
+								</el-form-item>
+								<el-form-item class="mt20">
+									<el-input type="text" placeholder="手机号"></el-input>
+								</el-form-item>
+								<el-form-item class="mt20 yanzheng">
+									<el-input type="text" style='width: 150px;' placeholder="验证码"></el-input>
+										<el-button type="warning" size="mini" round>获取验证码</el-button>
+									<p class="pt10"><a href="#">使用条款</a>&nbsp;&nbsp;<a href="#">隐私条款</a></p>
 								</el-form-item>
 								<el-form-item>
-									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="login('ruleForm')">立即登录</el-button>
+									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="register('ruleForm')">立即注册</el-button>
 								</el-form-item>
 							</fieldset>
 						</el-form>
@@ -71,7 +63,7 @@
 			<div class="zscf_aboutus px1000 clearfix">
 				<div class="zscf_aboutus_l fl">
 					<ul class="zscf_aboutus_lul clearfix">
-						<li class="pt10"><a href="#"><img src="../../assets/img/login/app.png" alt=""></a>
+						<li class="pt10"><a href="#"><img src="images/app.png" alt=""></a>
 						</li>
 						<li>
 							<p class="pb20">服务热线</p>
@@ -79,9 +71,9 @@
 						</li>
 						<li>
 							<p class="pb10 linkpic">
-								<a href="#"><img src="../../assets/img/login/ft_sina.png" alt=""></a>
-								<a href="#"><img src="../../assets/img/login/ft_weixin.png" alt=""></a>
-								<a href="#"><img src="../../assets/img/login/ft_erji.png" alt=""></a>
+								<a href="#"><img src="images/ft_sina.png" alt=""></a>
+								<a href="#"><img src="images/ft_weixin.png" alt=""></a>
+								<a href="#"><img src="images/ft_erji.png" alt=""></a>
 							</p>
 							<p><a href="#">kefu@zhongxincaifu.com</a></p>
 						</li>
@@ -100,7 +92,7 @@
 					</ul>
 				</div>
 				<!-- end right -->
-				<button @click="logins">admin</button>
+
 			</div>
 		</div>
 
@@ -121,32 +113,16 @@
 
 <script>
 	export default {
-		name: 'login',
+		name: 'register',
 		data() {
-			return {
-				loginForm: {
-					uname: '',
-				},
-
-			}
+			return {}
 		},
 		methods: {
 			login: function() {
 				this.$router.push({
-					path: '/AppMain'
-				});
-				// console.log(this.loginForm.uname);
-			},
-			logins: function() {
-				this.$router.push({
-					path: "/Admin"
+					path: "/"
 				})
-			},
-			register:function(){
-				this.$router.push({
-					path: "/Register"
-				})
-			},
+			}
 		}
 	}
 </script>

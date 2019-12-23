@@ -11,9 +11,9 @@
 					<a href="#"><img src="../../assets/img/login/zxcf_qq.png" alt=""></a>
 				</div>
 				<div class="zxcf_top_r fr">
-					<a href="login.html" class="curspan">立即登录</a>
+					<a @click="login" class="curspan">立即登录</a>
 					<span>|</span>
-					<a href="register.html">免费注册</a>
+					<a @click="register">免费注册</a>
 					<span>|</span>
 					<a href="problem.html">常见问题</a>
 				</div>
@@ -60,12 +60,17 @@
 			},
 			loan: function() {
 				this.$router.push({
-					path: "/Loan"
+					path: "/Jk"
 				})
 			},
 			accounts: function() {
 				this.$router.push({
 					path: "/Accounts"
+				})
+			},
+			register:function(){
+				this.$router.push({
+					path: "/Register"
 				})
 			},
 		}

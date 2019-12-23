@@ -1,28 +1,36 @@
 <template>
 	<div>
-		<!-- <div style="text-align: center;">
-			<img src="../../assets/img/login/app.png" />
-				<span>用户名：sdf</span><br/>
-				<span>最后登录时间：sdf</span>
-		</div> -->
-		<center style="border: 1px solid red;">
-			<table border="0" cellpadding="0" cellspacing="0">
-				<tr>
-					<td rowspan="3">头像</td>
-					<td colspan="2">&nbsp;</td>
-					<td>最后登录时间</td>
-				</tr>
-				<tr>
-					<td>用户名:</td>
-				</tr>
-					<tr>
-					<!-- <td>5</td> -->
-					<td>6</td>
-					<td>7</td>
-				</tr>
-				
-			</table>
-		</center>
+		<el-container style="height:100%; border: 1px solid #eee">
+			<el-aside width="250px" style="background-color: rgb(238, 241, 246)">
+				<el-menu :default-openeds="['1', '2','3']">
+					<el-submenu index="1">
+						<template slot="title"><i class="el-icon-message"></i>借贷项目</template>
+						<el-menu-item index="1-1">借款项目</el-menu-item>
+						<el-menu-item index="1-2">还款细明</el-menu-item>
+					</el-submenu>
+					<el-submenu index="2">
+						<template slot="title"><i class="el-icon-menu"></i>我的账户</template>
+						<el-menu-item>我的账户</el-menu-item>
+						<el-menu-item><a @click="zhxx">账户信息</a></el-menu-item>
+						<el-menu-item>实名认证</el-menu-item>
+						<el-menu-item>银行卡管理</el-menu-item>
+						<el-menu-item>个人资料</el-menu-item>
+						<el-menu-item>登录记录</el-menu-item>
+					</el-submenu>
+					<el-submenu index="3">
+						<template slot="title"><i class="el-icon-setting"></i>资产详情</template>
+						<el-menu-item>账户流水</el-menu-item>
+						<el-menu-item>充值明细</el-menu-item>
+					</el-submenu>
+				</el-menu>
+			</el-aside>
+
+			<el-container>
+				<el-main>
+					<router-view></router-view>
+				</el-main>
+			</el-container>
+		</el-container>
 	</div>
 </template>
 
@@ -31,11 +39,26 @@
 		name: 'accounts',
 		data() {
 			return {}
+		},
+		methods: {
+			zhxx: function() {
+				this.$router.push({
+					path: "/AccountsBody"
+				})
+			}
 		}
 	}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+	.el-header {
+		/* background-color: #B3C0D1; */
+		color: #333;
+		line-height: 60px;
+	}
 
+	.el-aside {
+		color: #333;
+	}
 </style>
