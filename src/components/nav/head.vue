@@ -5,7 +5,7 @@
 			<div class="zxcf_top px1000 clearfix">
 				<div class="zxcf_top_l fl">
 					<img src="images/zxcf_phone.png" alt="">
-					400-027-0101(工作时间9:00-17:30)
+					400-027-0101(在线时间9:00-17:30)
 					<a href="#"><img src="../../assets/img/login/zxcf_weixin.png" alt=""></a>
 					<a href="#"><img src="../../assets/img/login/zxcf_sina.png" alt=""></a>
 					<a href="#"><img src="../../assets/img/login/zxcf_qq.png" alt=""></a>
@@ -25,7 +25,7 @@
 				<div class="zxcf_nav_l fl"><img src="../../assets/img/login/login03.png" alt=""></div>
 				<div class="zxcf_nav_r fr">
 					<img src="../../assets/img/login/lg_pic01.png" alt="">
-					<span @click="accounts">我的账户<img src="images/zxcf_icon01.png" alt=""></span>
+					<span @click="accounts" title="进入个人中心">个人中心<img src="images/zxcf_icon01.png" alt=""></span>
 					<ul class="zxcf_perinfo" style="display:none;">
 						<li><a href="#">111</a></li>
 						<li><a href="#">111</a></li>

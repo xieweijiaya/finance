@@ -48,6 +48,11 @@ export default new Router({
 					component: Accounts,
 					children:[
 						{
+							path: '/',
+							name: 'AccountsBody',
+							component: AccountsBody,
+						},
+						{
 							path: '/AccountsBody',
 							name: 'AccountsBody',
 							component: AccountsBody,
