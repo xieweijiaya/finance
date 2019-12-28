@@ -30,27 +30,30 @@
 							<em class="fr">没有帐号，<a href="#">立即登录</a></em>
 						</h2>
 						<!-- <form> -->
-						<el-form :model="loginForm" ref="ruleForm">
+						<el-form :model="registerForm" :rules="rules" ref="registerForm">
 							<fieldset>
-								<el-form-item class="mt20">
-									<el-input type="text" placeholder="用户名/手机"></el-input>
+								<el-form-item class="mt20" prop="username">
+									<el-input type="text" v-model="registerForm.username" placeholder="用户名"></el-input>
 								</el-form-item>
-								<el-form-item class="mt20">
-									<el-input type="password" placeholder="密码"></el-input>
+								<el-form-item class="mt20" prop="password">
+									<el-input type="password" v-model="registerForm.password" placeholder="密码"></el-input>
 								</el-form-item>
-								<el-form-item class="mt20">
-									<el-input type="password" placeholder="确认密码"></el-input>
+								<div style="font-size: 12px;color: red;height: 0px;">{{pwd}}</div>
+								<el-form-item class="mt20" prop="password2">
+									<el-input type="password" v-model="registerForm.password2" placeholder="确认密码"></el-input>
 								</el-form-item>
-								<el-form-item class="mt20">
-									<el-input type="text" placeholder="手机号"></el-input>
+								<div style="font-size: 12px;color: red;height: 0px;">{{pwd}}</div>
+								<el-form-item class="mt20" prop="tel">
+									<el-input type="text" v-model="registerForm.tel" placeholder="手机号"></el-input>
 								</el-form-item>
-								<el-form-item class="mt20 yanzheng">
-									<el-input type="text" style='width: 150px;' placeholder="验证码"></el-input>
-										<el-button type="warning" size="mini" round>获取验证码</el-button>
+								<div style="font-size: 12px;color: red;height: 0px;">{{msg}}</div>
+								<el-form-item class="mt20 yanzheng" prop="yzm">
+									<el-input type="text" style='width: 150px;' v-model="y" placeholder="验证码"></el-input>
+									<el-button type="warning" size="mini" @click="yzm" round>{{content}}</el-button>
 									<p class="pt10"><a href="#">使用条款</a>&nbsp;&nbsp;<a href="#">隐私条款</a></p>
 								</el-form-item>
 								<el-form-item>
-									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="register('ruleForm')">立即注册</el-button>
+									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="register('registerForm')">立即注册</el-button>
 								</el-form-item>
 							</fieldset>
 						</el-form>
@@ -115,12 +118,112 @@
 	export default {
 		name: 'register',
 		data() {
-			return {}
+			return {
+				registerForm: {
+					username: '',
+					password: '',
+					password2: '',
+					tel: '',
+				},
+				content: '发送验证码', // 按钮里显示的内容
+				totalTime: 60, //记录具体倒计时时间
+				msg: '',
+				pwd: '',
+				inspect: 0,
+				y: '',
+				rules: {
+					username: [{
+						required: true,
+						message: '请填写用户名',
+						trigger: 'blur'
+					}],
+					password: [{
+						required: true,
+						message: '请填登录密码',
+						trigger: 'blur'
+					}],
+					password2: [{
+						required: true,
+						message: '请确认登录密码',
+						trigger: 'blur'
+					}],
+					tel: [{
+						required: true,
+						message: '请填写手机号码',
+						trigger: 'blur'
+					}],
+				}
+			}
 		},
 		methods: {
 			login: function() {
 				this.$router.push({
 					path: "/"
+				})
+			},
+			yzm: function() {
+				let reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+				if (this.registerForm.tel == '') {
+					this.msg = "请输入手机号码";
+				} else if (!reg.test(this.registerForm.tel)) {
+					this.msg = "手机格式不正确";
+				} else {
+					let clock = window.setInterval(() => {
+						this.totalTime--
+						this.content = this.totalTime + 's后重新发送'
+						if (this.totalTime == 0) {
+							clearInterval(clock)
+						}
+					}, 1000)
+					let url = this.axios.urls.SYSTEM_USER_YZM;
+					let form = {
+						tel: this.registerForm.tel
+					}
+					this.axios.post(url, form).then(resp => {
+						this.inspect = resp.data;
+					}).catch(resp => {})
+				}
+			},
+			register: function(registerForm) {
+				this.$refs[registerForm].validate(valid => {
+					if (valid) {
+						/**
+						 * 使用api工具获取url地址
+						 */
+						let reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+						if (this.registerForm.tel == '') {
+							this.msg = "请输入手机号码";
+						} else if (!reg.test(this.registerForm.tel)) {
+							this.msg = "手机格式不正确";
+						} else {
+							this.msg = '';
+							if (this.registerForm.password != this.registerForm.password2) {
+								this.pwd = "两次密码不一致，请重新输入";
+							} else {
+								this.pwd = '';
+								if (this.y == this.inspect && this.y!='') {
+									let url = this.axios.urls.SYSTEM_USER_REGISTER;
+									this.axios.post(url, this.registerForm).then(resp => {
+										this.$message({
+											message: resp.data.RegisterInfo,
+											type: 'success'
+										});
+										this.$router.push({
+											path: "/"
+										})
+									}).catch(resp => {
+										console.log(resp);
+									})
+								} else {
+									alert("验证码错误");
+								}
+							}
+
+						}
+					} else {
+						console.log("error form");
+						return false;
+					}
 				})
 			}
 		}

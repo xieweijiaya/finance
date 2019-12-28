@@ -42,14 +42,13 @@
 							<span class="fl">登录</span>
 							<em class="fr">没有帐号，<a href="#">立即注册</a></em>
 						</h2>
-						<!-- :rules="rules" -->
-						<el-form :model="loginForm" ref="ruleForm">
+						<el-form :model="loginForm" :rules="rules" ref="loginForm">
 							<fieldset>
-								<el-form-item class="mt20">
-									<el-input type="text" v-model="loginForm.uname" placeholder="请输入用户账号" autocomplete="off"></el-input>
+								<el-form-item class="mt20" prop="username">
+									<el-input type="text" v-model="loginForm.username" placeholder="请输入用户账号" autocomplete="off"></el-input>
 								</el-form-item>
-								<el-form-item class="mt20">
-									<el-input type="password" v-model="loginForm.upwd" placeholder="请输入用户密码" autocomplete="off"></el-input>
+								<el-form-item class="mt20" prop="password">
+									<el-input type="password" v-model="loginForm.password" placeholder="请输入用户密码" autocomplete="off"></el-input>
 								</el-form-item>
 								<el-form-item class="clearfix lg_check">
 									<span class="fl">
@@ -58,7 +57,7 @@
 									<a href="#" class="fr">忘记密码？找回</a>
 								</el-form-item>
 								<el-form-item>
-									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="login('ruleForm')">立即登录</el-button>
+									<el-button type="primary" class="lg_btn" style="width: 100%;" @click="login('loginForm')">立即登录</el-button>
 								</el-form-item>
 							</fieldset>
 						</el-form>
@@ -125,24 +124,70 @@
 		data() {
 			return {
 				loginForm: {
-					uname: '',
+					username: '',
+					password: ''
 				},
-
+				rules: {
+					username: [{
+							required: true,
+							message: '请输入用户账号',
+							trigger: 'blur'
+						},
+						{
+							min: 2,
+							max: 5,
+							message: '用户账号长度在 3 到 5 个字符',
+							trigger: 'blur'
+						}
+					],
+					password: [{
+						required: true,
+						message: '请输入登录密码',
+						trigger: 'blur'
+					}, ],
+				}
 			}
 		},
 		methods: {
-			login: function() {
-				this.$router.push({
-					path: '/AppMain'
-				});
-				// console.log(this.loginForm.uname);
+			login: function(loginForm) {
+				this.$refs[loginForm].validate(valid => {
+					if (valid) {
+						/**
+						 * 使用api工具获取url地址
+						 */
+						let url = this.axios.urls.SYSTEM_USER_DOLOGIN;
+						this.axios.post(url, this.loginForm).then(resp => {
+							if (resp.data.code == 0) {
+								this.$store.commit({
+									type: 'setUsers',
+									username: resp.data.users.username,
+									password: resp.data.users.password
+								})
+								this.$message({
+									message: resp.data.loginfo,
+									type: 'success'
+								});
+								this.$router.push({
+									path: '/AppMain'
+								});
+							} else {
+								this.$message.error(resp.data.loginfo);
+							}
+						}).catch(resp => {
+							console.log(resp);
+						})
+					} else {
+						console.log("error form");
+						return false;
+					}
+				})
 			},
 			logins: function() {
 				this.$router.push({
-					path: "/Admin"
+					path: "/Index"
 				})
 			},
-			register:function(){
+			register: function() {
 				this.$router.push({
 					path: "/Register"
 				})

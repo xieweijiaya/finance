@@ -11,7 +11,12 @@
 					<a href="#"><img src="../../assets/img/login/zxcf_qq.png" alt=""></a>
 				</div>
 				<div class="zxcf_top_r fr">
-					<a @click="login" class="curspan">立即登录</a>
+						<span v-if="Users.username!=''">
+							<span class="curspan">欢迎:{{Users.username}}进入平台</span>
+						</span>
+						<span v-else>
+							<a @click="login" class="curspan">立即登录</a>
+						</span>
 					<span>|</span>
 					<a @click="register">免费注册</a>
 					<span>|</span>
@@ -38,7 +43,7 @@
 			<div class="zxcf_menu px1000">
 				<a @click="index">首页</a>
 				<a href="invest.html">我要投资</a>
-				<a @click="loan" >我要借款</a>
+				<a @click="loan">我要借款</a>
 				<a href="#">实时财务</a>
 				<a href="noticelist.html">新手指引</a>
 				<a href="#" style="margin-right:0;">关于我们</a>
@@ -64,15 +69,26 @@
 				})
 			},
 			accounts: function() {
+
+				this.$store.commit({
+					type: 'setUsers',
+					username:this.Users.username,
+					password:this.Users.password
+				})
 				this.$router.push({
 					path: "/Accounts"
 				})
 			},
-			register:function(){
+			register: function() {
 				this.$router.push({
 					path: "/Register"
 				})
 			},
+		},
+		computed: {
+			Users: function() {
+				return this.$store.getters.getUsers
+			}
 		}
 	}
 </script>

@@ -11,7 +11,12 @@
 				<ul>
 					<li>
 						<i style="font-size: 11.5px;">填写基本资料</i>
-						<i class="el-icon-close" style="font-size: 11.5px;color: red;"></i>
+						<i v-if="person.pstatus == '1' ">
+							<i class="el-icon-check" style="font-size: 11.5px;color: green;"></i>
+						</i>
+						<i v-else>
+							<i class="el-icon-close" style="font-size: 11.5px;color: red;"></i>
+						</i>
 					</li>
 					<li>
 						<i style="font-size: 11.5px;">身份认证</i>
@@ -27,7 +32,8 @@
 					</li>
 				</ul>
 				<center>
-					<el-button type="primary" @click="request" size="mini" round>申请</el-button>
+					<el-button v-if="Users.username!=''" type="primary" @click="request" size="mini" round>申请</el-button>
+					<el-button v-else type="primary" @click="login" size="mini" round>登陆后申请</el-button>
 				</center>
 			</el-card>
 		</el-col>
@@ -78,14 +84,54 @@
 	export default {
 		name: 'jk',
 		data() {
-			return {}
+			return {
+
+				person: {}
+
+			}
 		},
 		methods: {
+			personal: function() {
+				let url = this.axios.urls.SYSTEM_PERSONAL;
+				let form = {
+					uname: this.Users.username
+				}
+				this.axios.post(url, form).then(resp => {
+					// if (resp.data.code == 0) {
+					// this.$message({
+					// 	message: resp.data.loginfo,
+					// 	type: 'success'
+					// });
+					// this.$router.push({
+					// 	path: '/AppMain'
+					// });
+					// } else {
+					// 	this.$message.error(resp.data.loginfo);
+					// }
+					this.person = resp.data
+					console.log(resp.data);
+				}).catch(resp => {
+					console.log(resp);
+				})
+			},
 			request: function() {
 				this.$router.push({
 					path: "/Loan"
 				})
+			},
+			login: function() {
+				this.$router.push({
+					path: "/"
+				})
 			}
+		},
+		computed: {
+			Users: function() {
+				return this.$store.getters.getUsers
+			}
+		},
+		created: function() {
+			this.personal()
 		}
 	}
 </script>

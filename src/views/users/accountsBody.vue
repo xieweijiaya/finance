@@ -5,8 +5,8 @@
 				<el-main>
 					<div>
 						<img src="../../assets/img/user/u=1912113785,1587702892&fm=26&gp=0.jpg" style="width:100px; height:100px; border-radius:50%; border: 1px solid #8D8D8D;" />
-						<span style="position: absolute;">用户名:呆呆</span>
-						<span style="position: absolute;top: 220px;">最后登录时间:2019-12-23</span>
+						<span style="position: absolute;">用户名:{{Users.username}}</span>
+						<span style="position: absolute;top: 220px;">最后登录时间:{{datetime}}</span>
 						<span style="position: absolute;top: 260px;left: 420px;">
 							<el-button type="primary" size="small">账户充值</el-button>
 							<el-button type="danger" size="small">账户提现</el-button>
@@ -59,6 +59,17 @@
 		name: 'accountsBody',
 		data() {
 			return {}
+		},
+		methods:{
+			
+		},
+		computed: {
+			Users: function() {
+				return this.$store.getters.getUsers
+			},
+			datetime:function(){
+				return new Date().toLocaleString()
+			}
 		}
 	}
 </script>

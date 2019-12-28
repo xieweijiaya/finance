@@ -10,6 +10,7 @@ import router from './router'
 import axios from '@/api/http'
 //vue项目对axios的全局配置
 import VueAxios from 'vue-axios'
+import store from '@/store'
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI) //新添加3
 
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 new Vue({
 	el: '#app',
 	router,
+	store,
 	components: {
 		App
 	},

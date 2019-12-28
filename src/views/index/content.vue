@@ -379,8 +379,6 @@
 								<div id="demo2"></div>
 							</div>
 						</div>
-
-
 					</div>
 				</div>
 			</div>
@@ -393,7 +391,11 @@
 		data() {
 			return {}
 		},
-		methods: {}
+		computed:{
+			Users:function(){
+				return this.$store.getters.getUsers
+			}
+		}
 	}
 </script>
 

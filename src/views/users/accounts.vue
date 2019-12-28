@@ -2,7 +2,7 @@
 	<div>
 		<el-container style="height:100%; border: 1px solid #eee">
 			<el-aside width="250px" style="background-color: rgb(238, 241, 246)">
-				<el-menu :default-openeds="['1', '2']">
+				<el-menu :default-openeds="['1', '2','3']">
 					<el-submenu index="1">
 						<template slot="title"><i class="el-icon-message"></i>借贷项目</template>
 						<el-menu-item index="1-1">借款项目</el-menu-item>
@@ -12,9 +12,9 @@
 						<template slot="title"><i class="el-icon-menu"></i>我的账户</template>
 						<el-menu-item>我的账户</el-menu-item>
 						<el-menu-item><a @click="zhxx">账户信息</a></el-menu-item>
-						<el-menu-item>实名认证</el-menu-item>
+						<el-menu-item><a @click="smrz">实名认证</a></el-menu-item>
 						<el-menu-item>银行卡管理</el-menu-item>
-						<el-menu-item>个人资料</el-menu-item>
+						<el-menu-item><a @click="grzl">个人资料</a></el-menu-item>
 						<el-menu-item>登录记录</el-menu-item>
 					</el-submenu>
 					<el-submenu index="3">
@@ -45,7 +45,18 @@
 				this.$router.push({
 					path: "/AccountsBody"
 				})
-			}
+			},
+			grzl:function(){
+				this.$router.push({
+					path: "/Grzl"
+				})
+			},
+			smrz:function(){
+				this.$router.push({
+					path: "/Smrz"
+				})
+			},
+			
 		}
 	}
 </script>
